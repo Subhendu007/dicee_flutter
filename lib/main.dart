@@ -1,16 +1,11 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    int leftDiceNumber = 4;
-    return MaterialApp(
-      title: 'Flutter Demo',
+  runApp(
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Dicee Changer',
       home: Scaffold(
         backgroundColor: Colors.red,
         appBar: AppBar(
@@ -19,27 +14,47 @@ class MyApp extends StatelessWidget {
           ),
           backgroundColor: Colors.red,
         ),
-        body: Container(
-          child: Center(
-            child: Row(
-              children: [
-                Expanded(
-                  child: FlatButton(
-                    onPressed: () {
-                      leftDiceNumber = 3;
-                    },
-                    child: Image.asset("images/dice$leftDiceNumber.png"),
-                  ),
-                ),
-                Expanded(
-                  child: FlatButton(
-                    onPressed: () {},
-                    child: Image.asset("images/dice2.png"),
-                  ),
-                ),
-              ],
+        body: DicePage(),
+      ),
+    ),
+  );
+}
+
+class DicePage extends StatefulWidget {
+  @override
+  _DicePageState createState() => _DicePageState();
+}
+
+class _DicePageState extends State<DicePage> {
+  int leftDiceNumber = 1;
+  int rightDiceNumber = 1;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Center(
+        child: Row(
+          children: [
+            Expanded(
+              child: FlatButton(
+                onPressed: () {
+                  setState(() {
+                    leftDiceNumber = Random().nextInt(6) + 1;
+                  });
+                },
+                child: Image.asset("images/dice$leftDiceNumber.png"),
+              ),
             ),
-          ),
+            Expanded(
+              child: FlatButton(
+                onPressed: () {
+                  setState(() {
+                    rightDiceNumber = Random().nextInt(6) + 1;
+                  });
+                },
+                child: Image.asset("images/dice$rightDiceNumber.png"),
+              ),
+            ),
+          ],
         ),
       ),
     );
